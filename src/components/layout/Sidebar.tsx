@@ -1,5 +1,118 @@
-import { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+// import { useState } from "react";
+// import { NavLink, useLocation } from "react-router-dom";
+// import {
+//   LayoutDashboard,
+//   LineChart,
+//   GitCompare,
+//   Star,
+//   Brain,
+//   Newspaper,
+//   Settings,
+//   ChevronLeft,
+//   ChevronRight,
+// } from "lucide-react";
+// import { cn } from "@/lib/utils";
+// import { Button } from "@/components/ui/button";
+// import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+
+// const navItems = [
+//   { icon: LayoutDashboard, label: "Dashboard", path: "/" },
+//   { icon: LineChart, label: "Stock Analysis", path: "/analysis" },
+//   { icon: GitCompare, label: "Compare Stocks", path: "/compare" },
+//   { icon: Star, label: "Watchlist", path: "/watchlist" },
+//   { icon: Brain, label: "Agent Reasoning", path: "/reasoning" },
+//   { icon: Newspaper, label: "News & Sentiment", path: "/news" },
+//   { icon: Settings, label: "Settings", path: "/settings" },
+// ];
+
+// interface SidebarProps {
+//   collapsed: boolean;
+//   onToggle: () => void;
+// }
+
+// export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
+//   const location = useLocation();
+
+//   return (
+//     <aside
+//       className={cn(
+//         "relative flex h-[calc(100vh-4rem)] flex-col border-r border-border bg-sidebar transition-all duration-300",
+//         collapsed ? "w-16" : "w-60"
+//       )}
+//     >
+//       {/* Navigation */}
+//       <nav className="flex-1 space-y-1 p-2 pt-4">
+//         {navItems.map((item) => {
+//           const isActive = location.pathname === item.path;
+//           const Icon = item.icon;
+
+//           const linkContent = (
+//             <NavLink
+//               to={item.path}
+//               className={cn(
+//                 "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+//                 isActive
+//                   ? "bg-primary/10 text-primary"
+//                   : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+//               )}
+//             >
+//               <Icon
+//                 className={cn(
+//                   "h-5 w-5 flex-shrink-0 transition-colors",
+//                   isActive ? "text-primary" : "text-sidebar-foreground group-hover:text-sidebar-accent-foreground"
+//                 )}
+//               />
+//               {!collapsed && (
+//                 <span className="truncate animate-fade-in">{item.label}</span>
+//               )}
+//               {isActive && (
+//                 <div className="absolute left-0 h-8 w-0.5 rounded-r-full bg-primary" />
+//               )}
+//             </NavLink>
+//           );
+
+//           if (collapsed) {
+//             return (
+//               <Tooltip key={item.path} delayDuration={0}>
+//                 <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
+//                 <TooltipContent side="right" className="font-medium">
+//                   {item.label}
+//                 </TooltipContent>
+//               </Tooltip>
+//             );
+//           }
+
+//           return <div key={item.path}>{linkContent}</div>;
+//         })}
+//       </nav>
+
+//       {/* Collapse Toggle */}
+//       <div className="border-t border-border p-2">
+//         <Button
+//           variant="ghost"
+//           size="sm"
+//           onClick={onToggle}
+//           className={cn(
+//             "w-full justify-center text-muted-foreground hover:text-foreground",
+//             !collapsed && "justify-start gap-2"
+//           )}
+//         >
+//           {collapsed ? (
+//             <ChevronRight className="h-4 w-4" />
+//           ) : (
+//             <>
+//               <ChevronLeft className="h-4 w-4" />
+//               <span className="text-xs">Collapse</span>
+//             </>
+//           )}
+//         </Button>
+//       </div>
+//     </aside>
+//   );
+// };
+
+
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   LayoutDashboard,
   LineChart,
@@ -10,6 +123,7 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Lock,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -28,10 +142,26 @@ const navItems = [
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
+  user: any;
+  openAuth: () => void;
 }
 
-export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
+export const Sidebar = ({
+  collapsed,
+  onToggle,
+  user,
+  openAuth,
+}: SidebarProps) => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavigation = (path: string) => {
+    if (!user) {
+      openAuth();
+      return;
+    }
+    navigate(path);
+  };
 
   return (
     <aside
@@ -40,35 +170,38 @@ export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
         collapsed ? "w-16" : "w-60"
       )}
     >
-      {/* Navigation */}
       <nav className="flex-1 space-y-1 p-2 pt-4">
         {navItems.map((item) => {
-          const isActive = location.pathname === item.path;
+          const isActive = user && location.pathname === item.path;
           const Icon = item.icon;
 
           const linkContent = (
-            <NavLink
-              to={item.path}
+            <div
+              onClick={() => handleNavigation(item.path)}
               className={cn(
-                "group flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
+                "relative group flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all",
                 isActive
                   ? "bg-primary/10 text-primary"
-                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+                  : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+                !user && "opacity-80"
               )}
             >
-              <Icon
-                className={cn(
-                  "h-5 w-5 flex-shrink-0 transition-colors",
-                  isActive ? "text-primary" : "text-sidebar-foreground group-hover:text-sidebar-accent-foreground"
-                )}
-              />
+              <Icon className="h-5 w-5 flex-shrink-0" />
+
               {!collapsed && (
-                <span className="truncate animate-fade-in">{item.label}</span>
+                <span className="truncate">
+                  {item.label}
+                </span>
               )}
+
+              {!user && !collapsed && (
+                <Lock className="ml-auto h-3.5 w-3.5 opacity-50" />
+              )}
+
               {isActive && (
                 <div className="absolute left-0 h-8 w-0.5 rounded-r-full bg-primary" />
               )}
-            </NavLink>
+            </div>
           );
 
           if (collapsed) {
@@ -76,7 +209,7 @@ export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
               <Tooltip key={item.path} delayDuration={0}>
                 <TooltipTrigger asChild>{linkContent}</TooltipTrigger>
                 <TooltipContent side="right" className="font-medium">
-                  {item.label}
+                  {user ? item.label : `${item.label} (Login required)`}
                 </TooltipContent>
               </Tooltip>
             );
@@ -86,7 +219,6 @@ export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
         })}
       </nav>
 
-      {/* Collapse Toggle */}
       <div className="border-t border-border p-2">
         <Button
           variant="ghost"

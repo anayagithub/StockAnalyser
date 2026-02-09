@@ -66,3 +66,51 @@ coverage/
 .venv/
 .env
 
+
+
+
+# --- Python Specific ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# --- Data & Parquet (Crucial for Stock Apps) ---
+# Don't track large data files; they should live in Supabase Storage
+*.parquet
+*.csv
+*.jsonl
+*.sqlite3
+
+# --- Secret / Local Configs ---
+# You already have .env, but some libraries create these:
+instance/
+.webassets-cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- SQLAlchemy / Alembic ---
+# If you use migrations, keep the versions but ignore the local config
+# alembic.ini  <-- Keep this IF it doesn't contain your DB password
+

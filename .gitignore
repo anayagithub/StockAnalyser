@@ -1,116 +1,195 @@
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-lerna-debug.log*
+# # Logs
+# logs
+# *.log
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# pnpm-debug.log*
+# lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
+# node_modules
+# dist
+# dist-ssr
+# *.local
 
-# Editor directories and files
-.vscode/*
-!.vscode/extensions.json
-.idea
+# # Editor directories and files
+# .vscode/*
+# !.vscode/extensions.json
+# .idea
+# .DS_Store
+# *.suo
+# *.ntvs*
+# *.njsproj
+# *.sln
+# *.sw?
+
+
+# # dependencies
+# node_modules/
+
+# # build files
+# dist/
+# build/
+# .next/
+# out/
+
+# # environment variables (VERY IMPORTANT)
+# .env
+# .env.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
+
+# # logs
+# npm-debug.log*
+# yarn-debug.log*
+# yarn-error.log*
+# pnpm-debug.log*
+
+# # OS files
+# .DS_Store
+# Thumbs.db
+
+# # IDE files
+# .vscode/
+# .idea/
+
+# # coverage
+# coverage/
+
+# # Supabase CLI local folder (if using)
+# .supabase/
+
+# # temp files
+# *.log
+
+# .venv/
+# .env
+
+
+
+
+# # --- Python Specific ---
+# __pycache__/
+# *.py[cod]
+# *$py.class
+# *.so
+# .Python
+# env/
+# venv/
+# ENV/
+# build/
+# develop-eggs/
+# dist/
+# downloads/
+# eggs/
+# .eggs/
+# lib/
+# lib64/
+# parts/
+# sdist/
+# var/
+# wheels/
+# *.egg-info/
+# .installed.cfg
+# *.egg
+# MANIFEST
+
+# # --- Data & Parquet (Crucial for Stock Apps) ---
+# # Don't track large data files; they should live in Supabase Storage
+# *.parquet
+# *.csv
+# *.jsonl
+# *.sqlite3
+
+# # --- Secret / Local Configs ---
+# # You already have .env, but some libraries create these:
+# instance/
+# .webassets-cache
+# .pytest_cache/
+# .mypy_cache/
+# .ruff_cache/
+
+# # --- SQLAlchemy / Alembic ---
+# # If you use migrations, keep the versions but ignore the local config
+# # alembic.ini  <-- Keep this IF it doesn't contain your DB password
+
+
+
+
+
+
+# --- System Files ---
 .DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+Thumbs.db
+*.swp
+*.log
 
-
-# dependencies
+# --- Dependencies & Build ---
 node_modules/
-
-# build files
 dist/
 build/
 .next/
 out/
+.supabase/          # Local Supabase CLI state (usually local-only)
 
-# environment variables (VERY IMPORTANT)
+# --- Environment Variables (CRITICAL) ---
+# Never push these; they contain your Supabase keys
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-# logs
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-pnpm-debug.log*
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# IDE files
-.vscode/
-.idea/
-
-# coverage
-coverage/
-
-# Supabase CLI local folder (if using)
-.supabase/
-
-# temp files
-*.log
-
-.venv/
-.env
-
-
-
+.env.*.local
 
 # --- Python Specific ---
 __pycache__/
 *.py[cod]
 *$py.class
-*.so
-.Python
-env/
 venv/
-ENV/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
+.venv/
+env/
+.pytest_cache/
+.mypy_cache/
 
-# --- Data & Parquet (Crucial for Stock Apps) ---
-# Don't track large data files; they should live in Supabase Storage
+# --- Large Data Files (Stock Data) ---
+# Since you have 100 companies x 5 years of data, these will bloat Git
 *.parquet
 *.csv
 *.jsonl
 *.sqlite3
 
-# --- Secret / Local Configs ---
-# You already have .env, but some libraries create these:
-instance/
-.webassets-cache
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
+# --- Editor / IDE ---
+.vscode/            # Personal editor settings
+.idea/              # JetBrains/WebStorm settings
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
 
-# --- SQLAlchemy / Alembic ---
-# If you use migrations, keep the versions but ignore the local config
-# alembic.ini  <-- Keep this IF it doesn't contain your DB password
+# --- Database Migrations (Exceptions) ---
+# We keep the 'supabase/migrations' folder TRACKED, but ignore local keys
+# supabase/.temp/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
